@@ -17,9 +17,10 @@
 namespace Daemon::Spawner {
     class Spawner
     {
+        public:
+            ~Spawner();
         protected:
             Spawner(Executable* e);
-            ~Spawner();
             void spawn(int n);
             void destroy(int n);
 
