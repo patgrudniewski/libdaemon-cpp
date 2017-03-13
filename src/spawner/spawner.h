@@ -21,8 +21,9 @@ namespace Daemon::Spawner {
             ~Spawner();
         protected:
             Spawner(Executable* e);
-            void spawn(int n);
-            void destroy(int n);
+            void spawn(unsigned int n);
+            void destroy(unsigned int n);
+            virtual void initFork();
 
         private:
             pid_t divide();

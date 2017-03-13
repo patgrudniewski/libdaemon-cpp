@@ -18,7 +18,7 @@ namespace Daemon::Spawner {
         delete this->pid;
     }
 
-    void Spawner::spawn(int n)
+    void Spawner::spawn(unsigned int n)
     {
         for (int i = 0; i < n; i++) {
             this->divide();
@@ -33,7 +33,7 @@ namespace Daemon::Spawner {
         if (pid < 0) {
             throw runtime_error("Error when forking");
         } else if (pid == 0) {
-            this->reset();
+            this->initFork();
             this->executable->run();
 
             exit(EXIT_SUCCESS);
@@ -44,7 +44,7 @@ namespace Daemon::Spawner {
         return pid;
     }
 
-    void Spawner::destroy(int n)
+    void Spawner::destroy(unsigned int n)
     {
         for (int i = 0; i < n; i++) {
             this->destroy();
@@ -72,5 +72,10 @@ namespace Daemon::Spawner {
     void Spawner::reset()
     {
         this->pid = new set<pid_t>();
+    }
+
+    void Spawner:: initFork()
+    {
+        this->reset();
     }
 }

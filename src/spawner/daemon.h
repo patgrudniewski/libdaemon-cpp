@@ -6,6 +6,8 @@
 #define _DAEMON_SPAWNER_DAEMON_H_
 
 #include <cstdlib>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "spawner.h"
 
@@ -14,6 +16,12 @@ namespace Daemon::Spawner {
     {
         public:
             Daemon(Executable *e, unsigned int n);
+
+        protected:
+            void initFork();
+
+        private:
+            void initDescriptors();
     };
 }
 
