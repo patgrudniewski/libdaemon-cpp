@@ -23,10 +23,10 @@ namespace Daemon::Spawner {
             Spawner(Executable* e);
             void spawn(unsigned int n);
             void destroy(unsigned int n);
-            virtual void initFork();
+            virtual pid_t divide();
+            virtual void runFork();
 
         private:
-            pid_t divide();
             void destroy();
             void reset();
 
