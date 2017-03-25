@@ -5,6 +5,7 @@
 #ifndef _DAEMON_SPAWNER_DAEMON_H_
 #define _DAEMON_SPAWNER_DAEMON_H_
 
+#include <csignal>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>

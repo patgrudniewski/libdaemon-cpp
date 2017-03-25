@@ -95,11 +95,6 @@ namespace Daemon::Spawner {
 
     void Daemon::bindSignals()
     {
-        signal(SIGCHLD, SIG_IGN);
-        signal(SIGTSTP, SIG_IGN);
-        signal(SIGTTOU, SIG_IGN);
-        signal(SIGTTIN, SIG_IGN);
-        signal(SIGHUP, SIG_IGN);
         signal(SIGTERM, Daemon::terminateFork);
     }
 
