@@ -2,8 +2,8 @@
  * @author Patryk Grudniewski <patgrudniewski@gmail.com>
  */
 
-#ifndef _DAEMON_SPAWNER_FOREGROUND_H_
-#define _DAEMON_SPAWNER_FOREGROUND_H_
+#ifndef _SPAWNER_FOREGROUNDSPAWNER_H_
+#define _SPAWNER_FOREGROUNDSPAWNER_H_
 
 #include <csignal>
 #include <cstdlib>
@@ -15,12 +15,12 @@
 #include "executable.h"
 #include "spawner.h"
 
-namespace Daemon::Spawner {
-    class Foreground : public Spawner
+namespace Spawner {
+    class ForegroundSpawner : public Spawner
     {
         public:
-            Foreground(Executable* e, unsigned int n);
-            ~Foreground();
+            ForegroundSpawner(Executable* e, unsigned int n);
+            ~ForegroundSpawner();
 
             void destroy(unsigned int n);
 

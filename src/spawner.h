@@ -2,15 +2,15 @@
  * @author Patryk Grudniewski <patgrudniewski@gmail.com>
  */
 
-#ifndef _DAEMON_SPAWNER_SPAWNER_H_
-#define _DAEMON_SPAWNER_SPAWNER_H_
+#ifndef _SPAWNER_SPAWNER_H_
+#define _SPAWNER_SPAWNER_H_
 
 #include <stdexcept>
 #include <unistd.h>
 
 #include "executable.h"
 
-namespace Daemon::Spawner {
+namespace Spawner {
     class Spawner
     {
         public:

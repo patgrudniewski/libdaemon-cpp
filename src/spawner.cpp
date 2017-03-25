@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace Daemon::Spawner {
+namespace Spawner {
     Spawner::Spawner(Executable* e)
         :executable(e)
     {  }

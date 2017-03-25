@@ -2,10 +2,10 @@
  * @author Patryk Grudniewski <patgrudniewski@gmail.com>
  */
 
-#ifndef _DAEMON_SPAWNER_EXECUTABLE_H_
-#define _DAEMON_SPAWNER_EXECUTABLE_H_
+#ifndef _SPAWNER_EXECUTABLE_H_
+#define _SPAWNER_EXECUTABLE_H_
 
-namespace Daemon::Spawner {
+namespace Spawner {
     class Executable
     {
         public:

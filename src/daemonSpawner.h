@@ -2,8 +2,8 @@
  * @author Patryk Grudniewski <patgrudniewski@gmail.com>
  */
 
-#ifndef _DAEMON_SPAWNER_DAEMON_H_
-#define _DAEMON_SPAWNER_DAEMON_H_
+#ifndef _SPAWNER_DAEMONSPAWNER_H_
+#define _SPAWNER_DAEMONSPAWNER_H_
 
 #include <csignal>
 #include <cstdio>
@@ -16,17 +16,15 @@
 #include <unistd.h>
 #include <vector>
 
-#include "../exception/permission_denied.h"
+#include "exception/permissionDenied.h"
 #include "spawner.h"
 
-namespace Daemon::Spawner {
-    class Daemon : public Spawner
+namespace Spawner {
+    class DaemonSpawner : public Spawner
     {
         public:
-            Daemon(Executable *e, unsigned int n, char const *name);
-            ~Daemon();
-
-            static void terminateFork(int signal);
+            DaemonSpawner(Executable *e, unsigned int n, char const *name);
+            ~DaemonSpawner();
 
         protected:
             pid_t divide();
@@ -38,6 +36,7 @@ namespace Daemon::Spawner {
             static int openLfp();
             void bindSignals();
             static void pushPid(int fd, pid_t pid);
+            static void terminateFork(int signal);
 
             char const *name;
             char const *cwd;

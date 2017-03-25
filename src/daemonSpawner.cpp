@@ -2,16 +2,16 @@
  * @author Patryk Grudniewski <patgrudniewski@gmail.com>
  */
 
-#include "daemon.h"
+#include "daemonSpawner.h"
 
 using namespace std;
 
-using namespace Daemon::Exception;
+using namespace Spawner::Exception;
 
-namespace Daemon::Spawner {
-    char const* Daemon::pidFilename = "daemon.pid";
+namespace Spawner {
+    char const* DaemonSpawner::pidFilename = "daemon.pid";
 
-    Daemon::Daemon(Executable *e, unsigned int n, char const *name)
+    DaemonSpawner::DaemonSpawner(Executable *e, unsigned int n, char const *name)
         :Spawner(e), name(name)
     {
         if (getuid()) {
@@ -20,19 +20,19 @@ namespace Daemon::Spawner {
 
         umask(027);
         this->cwd = this->changeWd();
-        this->lfp = Daemon::openLfp();
+        this->lfp = DaemonSpawner::openLfp();
 
         this->spawn(n);
 
         exit(EXIT_SUCCESS);
     }
 
-    Daemon::~Daemon()
+    DaemonSpawner::~DaemonSpawner()
     {
         close(this->lfp);
     }
 
-    char const* Daemon::changeWd()
+    char const* DaemonSpawner::changeWd()
     {
         string dirname(this->wdBase);
         struct stat sb;
@@ -51,11 +51,11 @@ namespace Daemon::Spawner {
         return dirname.c_str();
     }
 
-    int Daemon::openLfp()
+    int DaemonSpawner::openLfp()
     {
         int lfp;
 
-        lfp = open(Daemon::pidFilename, O_RDWR|O_CREAT, 0640);
+        lfp = open(DaemonSpawner::pidFilename, O_RDWR|O_CREAT, 0640);
         if (-1 == lfp) {
             throw runtime_error("Unable to open PID file");
         };
@@ -67,17 +67,17 @@ namespace Daemon::Spawner {
         return lfp;
     }
 
-    pid_t Daemon::divide()
+    pid_t DaemonSpawner::divide()
     {
         pid_t pid;
 
         pid = Spawner::divide();
-        Daemon::pushPid(this->lfp, pid);
+        DaemonSpawner::pushPid(this->lfp, pid);
 
         return pid;
     }
 
-    void Daemon::runFork()
+    void DaemonSpawner::runFork()
     {
         this->initDescriptors();
         this->bindSignals();
@@ -85,7 +85,7 @@ namespace Daemon::Spawner {
         Spawner::runFork();
     }
 
-    void Daemon::pushPid(int fd, pid_t pid)
+    void DaemonSpawner::pushPid(int fd, pid_t pid)
     {
         char buf[10];
 
@@ -93,12 +93,12 @@ namespace Daemon::Spawner {
         write(fd, buf, strlen(buf));
     }
 
-    void Daemon::bindSignals()
+    void DaemonSpawner::bindSignals()
     {
-        signal(SIGTERM, Daemon::terminateFork);
+        signal(SIGTERM, DaemonSpawner::terminateFork);
     }
 
-    void Daemon::initDescriptors()
+    void DaemonSpawner::initDescriptors()
     {
         int fd;
 
@@ -110,7 +110,7 @@ namespace Daemon::Spawner {
         dup(fd);
     }
 
-    void Daemon::terminateFork(int signal)
+    void DaemonSpawner::terminateFork(int signal)
     {
         pid_t pid, iBuf;
         vector<pid_t> forks;
@@ -118,7 +118,7 @@ namespace Daemon::Spawner {
         char cBuf;
         string sBuf;
 
-        lfp = Daemon::openLfp();
+        lfp = DaemonSpawner::openLfp();
         pid = getpid();
         while (read(lfp, &cBuf, 1) > 0) {
             if (0x0A == cBuf) {
@@ -135,7 +135,7 @@ namespace Daemon::Spawner {
 
         ftruncate(lfp, 0);
         for (int i = 0; i < forks.size(); ++i) {
-            Daemon::pushPid(lfp, forks[i]);
+            DaemonSpawner::pushPid(lfp, forks[i]);
         }
 
         exit(EXIT_SUCCESS);

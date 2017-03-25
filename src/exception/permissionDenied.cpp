@@ -2,11 +2,11 @@
  * @author Patryk Grudniewski <patgrudniewski@gmail.com>
  */
 
-#include "permission_denied.h"
+#include "permissionDenied.h"
 
 using namespace std;
 
-namespace Daemon::Exception {
+namespace Spawner::Exception {
     PermissionDenied::PermissionDenied(const string &what_arg)
         :runtime_error(what_arg)
     {  }
